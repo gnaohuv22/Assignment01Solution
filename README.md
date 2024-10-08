@@ -35,7 +35,7 @@ The eStore project is a web application designed to manage an online store. It i
 
 1. **Clone the repository**:
 ```
-git clone https://github.com/your-repo/eStore.git
+git clone https://github.com/gnaohuv22/Assignment01Solution.git
 cd eStore
 ```
 
