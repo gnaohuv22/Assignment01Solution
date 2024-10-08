@@ -15,6 +15,6 @@ namespace BusinessObject
         public int UnitsInStock { get; set; }
 
         public Category Category { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

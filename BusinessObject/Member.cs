@@ -15,6 +15,6 @@ namespace BusinessObject
         public string Country { get; set; }
         public string Password { get; set; }
 
-        public ICollection<Product> Orders { get; set; }
+        public virtual ICollection<Product> Orders { get; set; }
     }
 }

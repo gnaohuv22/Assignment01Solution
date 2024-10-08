@@ -15,6 +15,6 @@ namespace BusinessObject
         public decimal Freight { get; set; }
 
         public Member Member { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
