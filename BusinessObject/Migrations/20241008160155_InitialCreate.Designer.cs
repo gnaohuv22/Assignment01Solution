@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241008123733_InitialDB")]
-    partial class InitialDB
+    [Migration("20241008160155_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace BusinessObject.Migrations
                     b.ToTable("Members");
                 });
 
-            modelBuilder.Entity("BusinessObject.Product", b =>
+            modelBuilder.Entity("BusinessObject.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -182,6 +182,9 @@ namespace BusinessObject.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -199,13 +202,15 @@ namespace BusinessObject.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("MemberId");
+
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("BusinessObject.Product", b =>
+            modelBuilder.Entity("BusinessObject.Order", b =>
                 {
                     b.HasOne("BusinessObject.Member", "Member")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -215,7 +220,7 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.OrderDetail", b =>
                 {
-                    b.HasOne("BusinessObject.Product", "Product")
+                    b.HasOne("BusinessObject.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -227,7 +232,7 @@ namespace BusinessObject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -239,6 +244,10 @@ namespace BusinessObject.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BusinessObject.Member", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("MemberId");
 
                     b.Navigation("Category");
                 });
@@ -253,7 +262,7 @@ namespace BusinessObject.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("BusinessObject.Product", b =>
+            modelBuilder.Entity("BusinessObject.Order", b =>
                 {
                     b.Navigation("OrderDetails");
                 });

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BusinessObject.ProductDto>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Product</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Category ID</th>
+            <th>Unit Price</th>
+            <th>Units In Stock</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.ProductName</td>
+                <td>@product.CategoryId</td>
+                <td>@product.UnitPrice.ToString("C")</td>
+                <td>@product.UnitsInStock</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@product.ProductId" class="btn btn-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@product.ProductId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@product.ProductId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
