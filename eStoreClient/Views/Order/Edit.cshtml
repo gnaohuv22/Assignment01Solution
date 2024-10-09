@@ -1,0 +1,54 @@
+﻿@model BusinessObject.OrderDto
+
+@{
+    ViewData["Title"] = "Edit Order";
+}
+
+<h1>Edit Order</h1>
+
+<h4>Order</h4>
+<hr />
+<div>
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="OrderId" />
+
+        <div class="form-group">
+            <label asp-for="MemberId" class="control-label"></label>
+            <input asp-for="MemberId" class="form-control" />
+            <span asp-validation-for="MemberId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="OrderDate" class="control-label"></label>
+            <input asp-for="OrderDate" class="form-control" type="date" />
+            <span asp-validation-for="OrderDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RequiredDate" class="control-label"></label>
+            <input asp-for="RequiredDate" class="form-control" type="date" />
+            <span asp-validation-for="RequiredDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ShippedDate" class="control-label"></label>
+            <input asp-for="ShippedDate" class="form-control" type="date" />
+            <span asp-validation-for="ShippedDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Freight" class="control-label"></label>
+            <input asp-for="Freight" class="form-control" type="number" step="0.01" />
+            <span asp-validation-for="Freight" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

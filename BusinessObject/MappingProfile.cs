@@ -13,7 +13,7 @@ namespace BusinessObject
         {
             CreateMap<Member, MemberDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<Product, OrderDto>().ReverseMap();
+            CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
         }
     }
