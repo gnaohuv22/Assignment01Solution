@@ -61,5 +61,11 @@ namespace DataAccess
             _context.Members.Remove(member);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Member> GetMemberByEmail(string email)
+        {
+            var member = await _context.Members.FirstOrDefaultAsync(x => x.Email == email);
+            return _mapper.Map<Member>(member);
+        }
     }
 }

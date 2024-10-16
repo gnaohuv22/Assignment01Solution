@@ -14,5 +14,6 @@ namespace Repositories
         Task AddMemberAsync(MemberDto memberDto);
         Task UpdateMemberAsync(int id, MemberDto memberDto);
         Task DeleteMemberAsync(int id);
+        Task<Member> GetMemberByEmail(string email);
     }
 }

@@ -32,6 +32,14 @@ namespace eStoreAPI.Controllers
             return Ok(member);
         }
 
+        //GET: api/Member/GetMemberByEmail/{email}
+        [HttpGet("GetMemberByEmail/{email}")]
+        public async Task<ActionResult<Member>> GetMemberByEmail(string email)
+        {
+            var member = await _memberRepository.GetMemberByEmail(email);
+            return Ok(member);
+        }
+
         //POST: api/Member/AddMember
         [HttpPost("AddMember")]
         public async Task<ActionResult<Member>> AddMember(MemberDto memberDto)

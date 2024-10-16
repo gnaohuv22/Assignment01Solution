@@ -32,6 +32,11 @@ namespace Repositories
             return await _orderDAO.GetOrderByIdAsync(id);
         }
 
+        public async Task<IEnumerable<Order>> GetOrderByMemberIdAsync(int memberId)
+        {
+            return await _orderDAO.GetOrderByMemberIdAsync(memberId);
+        }
+
         public async Task UpdateOrderAsync(int id, OrderDto orderDto)
         {
             await _orderDAO.UpdateOrderAsync(id, orderDto);

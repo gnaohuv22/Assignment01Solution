@@ -8,12 +8,14 @@ namespace eStoreClient.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
         private readonly string _baseUrl = "https://localhost:7194/api/MemberAPI";
 
-        public MemberController(HttpClient httpClient, IMapper mapper)
+        public MemberController(HttpClient httpClient, IMapper mapper, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         //GET: Member
@@ -136,6 +138,63 @@ namespace eStoreClient.Controllers
                 ModelState.AddModelError(string.Empty, "An error occurred while deleting the member.");
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        //GET: Member/Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        //POST: Member/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var adminEmail = _configuration["AdminEmail"];
+            var adminPassword = _configuration["AdminPassword"];
+
+            if (email == adminEmail && password == adminPassword)
+            {
+                HttpContext.Session.SetString("Role", "Admin");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var member = await _httpClient.GetFromJsonAsync<Member>($"{_baseUrl}/GetMemberByEmail/{email}");
+            if (member == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View();
+            }
+
+            if (member.Password != password)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid email or password.");
+                return View();
+            }
+
+            HttpContext.Session.SetString("MemberId", member.MemberId.ToString());
+            HttpContext.Session.SetString("Role", "Member");
+            return RedirectToAction(nameof(Profile));
+        }
+
+        //GET: Member/Profile
+        public async Task<IActionResult> Profile()
+        {
+            var memberId = HttpContext.Session.GetString("MemberId");
+            if (string.IsNullOrEmpty(memberId))
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            var member = await _httpClient.GetFromJsonAsync<Member>($"{_baseUrl}/GetMemberById/{memberId}");
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            var memberDto = _mapper.Map<MemberDto>(member);
+            return View(memberDto);
         }
     }
 }

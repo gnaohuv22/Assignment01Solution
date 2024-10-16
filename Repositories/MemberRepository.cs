@@ -26,6 +26,11 @@ namespace Repositories
             return await _memberDAO.GetAllMembersAsync();
         }
 
+        public async Task<Member> GetMemberByEmail(string email)
+        {
+            return await _memberDAO.GetMemberByEmail(email);
+        }
+
         public async Task<Member> GetMemberByIdAsync(int id)
         {
             return await _memberDAO.GetMemberByIdAsync(id);

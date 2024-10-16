@@ -9,5 +9,6 @@ namespace Repositories
         Task AddOrderAsync(OrderDto orderDto);
         Task UpdateOrderAsync(int id, OrderDto orderDto);
         Task DeleteOrderAsync(int id);
+        Task<IEnumerable<Order>> GetOrderByMemberIdAsync(int memberId);
     }
 }

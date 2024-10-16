@@ -32,6 +32,14 @@ namespace eStoreAPI.Controllers
             return Ok(order);
         }
 
+        //GET: api/Order/GetOrderByMemberId/{memberId}
+        [HttpGet("GetOrderByMemberId/{memberId}")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrderByMemberId(int memberId)
+        {
+            var orders = await _orderRepository.GetOrderByMemberIdAsync(memberId);
+            return Ok(orders);
+        }
+
         //POST: api/Order/AddOrder
         [HttpPost("AddOrder")]
         public async Task<ActionResult<Order>> AddOrder(OrderDto orderDto)

@@ -61,6 +61,13 @@ namespace DataAccess
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Order>> GetOrderByMemberIdAsync(int memberId)
+        {
+            var orders = await _context.Orders
+                .Where(x => x.MemberId == memberId).ToListAsync();
+            return orders;
+        }
     }
 }
 
